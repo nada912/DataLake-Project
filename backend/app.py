@@ -1,13 +1,9 @@
-from flask import Flask, jsonify, request
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from flask import Flask, jsonify
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
-from collections import defaultdict
-from sqlalchemy import desc
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -69,6 +65,10 @@ class Utilisateur(db.Model):
 
 
 # Routes
+@app.route('/')
+def index():
+    return "Welcome to the Flask App"
+
 @app.route('/auth/register/', methods=['POST'])
 def register():
     data = request.get_json()
@@ -145,4 +145,4 @@ def get_all_tracks():
 
 # Run the app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
